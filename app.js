@@ -43,13 +43,23 @@ let budgetController = (function() {
       //return our newItem
       return newItem;
     },
-    
-    caluculateBudget: function() {
-        //calculate tatal income and expenses 
-        data.allItems.inc.reduce((a, b) => a + b);
-        //Calculate the budget: income - expenses
 
-        //Calculate the percentage of the income that we spent
+    caluculateBudget: function() {
+      let incumSum = 0;
+      let expSum = 0;
+      //calculate tatal income and expenses
+      data.allItems.inc.forEach(el => (incumSum += el.value));
+      data.totals.inc = incumSum;
+      console.log(data.totals.inc);
+
+      data.allItems.exp.forEach(el => (expSum += el.value));
+      data.totals.exp = expSum;
+      console.log(expSum);
+
+      //Calculate the budget: income - expenses
+        let availableBudget = data.totals.inc - data.totals.exp;
+      //Calculate the percentage of the income that we spent
+        let 
 
     }
   };
@@ -159,6 +169,7 @@ let controller = (function(budgetCntrl, UICntrl) {
 
       //5. Calculate and update budget
       updateBudget();
+      budgetCntrl.caluculateBudget();
     }
   };
 
