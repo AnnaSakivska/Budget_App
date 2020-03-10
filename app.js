@@ -57,10 +57,13 @@ let budgetController = (function() {
       console.log(expSum);
 
       //Calculate the budget: income - expenses
-        let availableBudget = data.totals.inc - data.totals.exp;
+      let availableBudget = data.totals.inc - data.totals.exp;
+      console.log(availableBudget);
       //Calculate the percentage of the income that we spent
-        let 
-
+      if (data.totals.inc > 0 && data.totals.exp > 0) {
+        let percentage = Math.round((100 * data.totals.inc) / data.totals.exp);
+        console.log(percentage);
+      }
     }
   };
 })();
