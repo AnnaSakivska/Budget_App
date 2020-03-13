@@ -198,15 +198,14 @@ let UIController = (function() {
 
     displayPercentages: function(percentages) {
       let fields = document.querySelectorAll(DOMStrings.itemPercentages);
-      console.log(fields);
+
+      let reversedPercArray = percentages.reverse();
 
       [...fields].forEach(function(cur, index) {
-        if (percentages[index] > -1) {
-          
-          cur.innerText = `${percentages[index]}` + "%";
-          console.log(percentages[index]);
+        if (reversedPercArray[index] > 0) {
+          cur.textContent = reversedPercArray[index] + "%";
         } else {
-          cur.innerText = "---";
+          cur.textContent = "---";
         }
       });
 
