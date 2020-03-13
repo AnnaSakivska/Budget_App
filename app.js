@@ -260,7 +260,7 @@ let controller = (function(budgetCntrl, UICntrl) {
     budgetCntrl.calcPercentage();
     //2. Read pecentage from the budget controller
     let percentages = budgetCntrl.getPercentages();
-    console.log(percentages);
+
     //3. Update the UI with the new percentage
     UICntrl.displayPercentages(percentages);
   };
