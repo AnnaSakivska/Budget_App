@@ -277,6 +277,20 @@ let UIController = (function() {
         months[month] + " " + year;
     },
 
+    changeType: function() {
+      [
+        ...document.querySelectorAll(
+          DOMStrings.inputType +
+            "," +
+            DOMStrings.inputDescription +
+            "," +
+            DOMStrings.inputValue
+        )
+      ].forEach(el => el.classList.toggle("red-focus"));
+
+      document.querySelector(DOMStrings.inputButton).classList.toggle("red");
+    },
+
     getDOMStrings: function() {
       return DOMStrings;
     }
@@ -295,6 +309,11 @@ let controller = (function(budgetCntrl, UICntrl) {
         ctrlAddItem();
       }
     });
+
+    document
+      .querySelector(DOM.inputType)
+      .addEventListener("change", UICntrl.changeType);
+
     document
       .querySelector(DOM.container)
       .addEventListener("click", ctrlDeleteItem);
