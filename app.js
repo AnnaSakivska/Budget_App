@@ -127,6 +127,29 @@ let UIController = (function() {
     container: ".container",
     itemPercentages: ".item__percentage"
   };
+
+  let formatNumber = function(num, type) {
+    let numSplit, int, dec, sign;
+
+    num = Math.abs(num);
+    num = num.toFixed(2);
+    numSplit = num.split(".");
+
+    int = numSplit[0];
+
+    int.length > 3
+      ? (int =
+          int.substring(0, int.length - 3) +
+          "," +
+          int.substring(int.length - 3, int.length))
+      : (int = numSplit[0]);
+
+    dec = numSplit[1];
+    type === "exp" ? (sign = "-") : (sign = "+");
+
+    return sign + int + "." + dec;
+  };
+
   return {
     getInput: function() {
       return {
@@ -142,7 +165,10 @@ let UIController = (function() {
         html = `<div class="item clearfix" id="inc-${object.id}">
                     <div class="item__description">${object.description}</div>
                     <div class="right clearfix">
-                        <div class="item__value">${object.value}</div>
+                        <div class="item__value">${formatNumber(
+                          object.value,
+                          type
+                        )}</div>
                         <div class="item__delete">
                             <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
                         </div>
@@ -155,7 +181,10 @@ let UIController = (function() {
         html = `<div class="item clearfix" id="exp-${object.id}">
                     <div class="item__description">${object.description}</div>
                     <div class="right clearfix">
-                        <div class="item__value">${object.value}</div>
+                        <div class="item__value">${formatNumber(
+                          object.value,
+                          type
+                        )}</div>
                         <div class="item__percentage">21%</div>
                         <div class="item__delete">
                             <button class="item__delete--btn"><i class="ion-ios-close-outline"></i></button>
@@ -183,11 +212,20 @@ let UIController = (function() {
     },
 
     displayBudget: function(budget) {
-      document.querySelector(DOMStrings.budgetLabel).innerText = budget.budget;
-      document.querySelector(DOMStrings.incomeLabel).innerText =
-        budget.totalInc;
-      document.querySelector(DOMStrings.expensesLabel).innerText =
-        budget.totalExp;
+      let type;
+      type = budget.budget > 0 ? (type = "inc") : (type = "type");
+      document.querySelector(DOMStrings.budgetLabel).innerText = formatNumber(
+        budget.budget,
+        type
+      );
+      document.querySelector(DOMStrings.incomeLabel).innerText = formatNumber(
+        budget.totalInc,
+        "inc"
+      );
+      document.querySelector(DOMStrings.expensesLabel).innerText = formatNumber(
+        budget.totalExp,
+        "exp"
+      );
       if (budget.percentage > 0) {
         document.querySelector(DOMStrings.percentageLabel).innerText =
           budget.percentage + "%";
@@ -208,17 +246,6 @@ let UIController = (function() {
           cur.textContent = "---";
         }
       });
-
-      //  function(list, callback) {
-      //   for (let i = 0; i < list.length; i++) {
-      //     callback(list[i], i);
-      //   }
-
-      //   nodeListForEach(fields, function(current, index) {
-
-      //   });
-      // fields.innerText = pecentages +
-      // };
     },
 
     getDOMStrings: function() {
